@@ -40,6 +40,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-syntastic/syntastic'
 Plug 'stephpy/vim-php-cs-fixer'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'vim-vdebug/vdebug'
@@ -111,10 +112,6 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " let g:Lf_IgnoreCurrentBufferName = 1
 " :nnoremap <C-L> :Leaderf file<CR>
 
-" Integrate fzf via Homebrew
-set rtp+=/usr/local/opt/fzf
-" Integrate fzf via install on servers
-set rtp+=~/.fzf
 " Shortcuts for using fzf in vim
 nnoremap <leader>f :Files<cr>
 nnoremap <leader>g :GFiles<cr>

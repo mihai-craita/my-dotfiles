@@ -1,20 +1,16 @@
+filetype plugin indent on
+syntax on
+set noswapfile     " no swap files
 set nobackup       " no backup files
 set nowritebackup  " only in case you don't want a backup file while editing
-set noswapfile     " no swap files
 set noshowmatch    " no matching chars
 
-set tabstop=4 softtabstop=4
-set shiftwidth=4
+set tabstop=4 softtabstop=4 shiftwidth=4
 set smarttab
 set expandtab               " on tab press insert spaces
 set list                    " Display spaces and tabs and oddities (like non-breaking white-space)
 set showcmd                 " Show (partial) command available in status line
 set hidden                  " Hide buffers when they are abandoned
-filetype plugin on
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=50
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -22,40 +18,35 @@ set shortmess+=c
 set number
 set relativenumber
 
+set cursorline
 " gutter limit
 set colorcolumn=121
-" keep the cursor centered vertically
-set scrolloff=999
-set cursorline
 
 " remove highlighted text when enter is pressed
 nnoremap <silent> <CR> :nohlsearch<cr><esc>
-" Try to load minpac.
+
 call plug#begin()
+    Plug 'scrooloose/nerdtree'
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-surround'
+    Plug 'vim-syntastic/syntastic'
+    Plug 'stephpy/vim-php-cs-fixer'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    Plug 'sheerun/vim-polyglot'
 
-Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'vim-syntastic/syntastic'
-Plug 'stephpy/vim-php-cs-fixer'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'sheerun/vim-polyglot'
-Plug 'vim-vdebug/vdebug'
+    " colors packs, find more on http://vimcolors.com/
+    Plug 'morhetz/gruvbox'
+    Plug 'lifepillar/vim-solarized8'
+    Plug 'andbar-ru/vim-unicon'
+    Plug 'mhartington/oceanic-next'
+    Plug 'trusktr/seti.vim'
+    Plug 'drewtempelmeyer/palenight.vim'
 
-" colors packs, find more on http://vimcolors.com/
-Plug 'morhetz/gruvbox'
-Plug 'lifepillar/vim-solarized8'
-Plug 'andbar-ru/vim-unicon'
-Plug 'mhartington/oceanic-next'
-Plug 'trusktr/seti.vim'
-Plug 'drewtempelmeyer/palenight.vim'
-
-"fonts
-Plug 'ryanoasis/vim-devicons'
-
+    "fonts
+    Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 let mapleader=","
@@ -63,7 +54,6 @@ let mapleader=","
 " Colorschemes
 colorscheme gruvbox
 set background=dark
-let mapleader = ","
 
 "statusline
 let g:currentmode={
@@ -108,18 +98,15 @@ nmap <silent> gd <Plug>(coc-definition)
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Leaderf settings
-" let g:Lf_IgnoreCurrentBufferName = 1
-" :nnoremap <C-L> :Leaderf file<CR>
-
 " Shortcuts for using fzf in vim
 nnoremap <leader>f :Files<cr>
 nnoremap <leader>g :GFiles<cr>
 nnoremap <leader>t :Tags<cr>
+nnoremap <leader>b :Buffers<cr>
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 
-let g:php_cs_fixer_rules = "@PSR1"
+let g:php_cs_fixer_rules = "@PSR12"
 autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 
 " Syntastic configuration for PHP

@@ -93,7 +93,9 @@ set statusline+=\ %L
 " mode information is displayed in the statusline we dont need it anymore
 set noshowmode
 
+let g:coc_global_extensions = ['coc-json', 'coc-tsserver']
 nmap <silent> gd <Plug>(coc-definition)
+
 " Let <Tab> also do completion
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"

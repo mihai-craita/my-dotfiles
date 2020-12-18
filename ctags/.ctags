@@ -1,0 +1,15 @@
+--exclude=.git
+--exclude=node_modules
+--exclude=gulp
+--exclude=log
+--exclude=tmp
+--exclude=tags
+--exclude=vendor
+--exclude=min
+--exclude=.swp
+--exclude=.tmp
+--exclude=*.min.*
+--exclude=*.spec.*
+--exclude=*.test.*
+
+--langmap=javascript:.js.es6.es.jsx.mjs

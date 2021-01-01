@@ -15,6 +15,9 @@ set hidden                  " Hide buffers when they are abandoned
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
+" use true colors palette on 24 bits (16 million colors)
+set termguicolors
+
 set number
 set relativenumber
 
@@ -52,10 +55,11 @@ call plug#end()
 let mapleader=","
 
 " Colorschemes
+let g:gruvbox_italic=1
 colorscheme gruvbox
 set background=dark
 
-"statusline
+" statusline
 let g:currentmode={
             \ 'n'  : 'NORMAL ',
             \ 'no' : 'N·Operator Pending ',

@@ -32,13 +32,12 @@ call plug#begin()
     Plug 'scrooloose/nerdtree'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
-    Plug 'tpope/vim-surround'
     Plug 'vim-syntastic/syntastic'
-    Plug 'stephpy/vim-php-cs-fixer'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'sheerun/vim-polyglot'
+    Plug 'mhinz/vim-startify'
 
     " colors packs, find more on http://vimcolors.com/
     Plug 'morhetz/gruvbox'
@@ -50,6 +49,8 @@ call plug#begin()
 
     "fonts
     Plug 'ryanoasis/vim-devicons'
+    Plug 'bryanmylee/vim-colorscheme-icons'
+
 call plug#end()
 
 let mapleader=","
@@ -109,6 +110,11 @@ nnoremap <leader>f :Files<cr>
 nnoremap <leader>g :GFiles<cr>
 nnoremap <leader>t :Tags<cr>
 nnoremap <leader>b :Buffers<cr>
+nnoremap <leader>r :Rg<cr>
+nnoremap <leader>n :NERDTreeToggle<cr>
+nnoremap <leader>nt :NERDTreeToggle<cr>
+nnoremap <leader>nf :NERDTreeFind<cr>
+
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 
@@ -119,3 +125,10 @@ autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 let g:syntastic_php_phpcs_args = '--standard=psr12'
 let g:syntastic_php_phpmd_post_args = 'cleancode,codesize,controversial,design,unusedcode'
+
+let g:startify_files_number = 7
+let g:startify_bookmarks = [ {'c': '~/.config/nvim/init.vim'} ]
+let g:startify_commands = [
+            \ {'n': ['Open NERDTree', 'NERDTreeToggle']},
+            \ {'h': ['Help Startify', 'h startify']},
+            \ ]

@@ -38,6 +38,7 @@ call plug#begin()
     Plug 'junegunn/fzf.vim'
     Plug 'sheerun/vim-polyglot'
     Plug 'mhinz/vim-startify'
+    Plug 'vim-vdebug/vdebug'
 
     " colors packs, find more on http://vimcolors.com/
     Plug 'morhetz/gruvbox'
@@ -98,7 +99,7 @@ set statusline+=\ %L
 " mode information is displayed in the statusline we dont need it anymore
 set noshowmode
 
-let g:coc_global_extensions = ['coc-json', 'coc-tsserver']
+let g:coc_global_extensions = ['coc-phpls', 'coc-json', 'coc-tsserver']
 nmap <silent> gd <Plug>(coc-definition)
 
 " Let <Tab> also do completion
@@ -120,6 +121,7 @@ let g:fzf_buffers_jump = 1
 
 let g:php_cs_fixer_rules = "@PSR12"
 autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
+autocmd FileType php set iskeyword+=$
 
 " Syntastic configuration for PHP
 let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']

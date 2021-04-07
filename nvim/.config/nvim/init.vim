@@ -37,6 +37,7 @@ call plug#begin()
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'sheerun/vim-polyglot'
+    Plug 'junegunn/vim-easy-align'
     Plug 'mhinz/vim-startify'
     Plug 'vim-vdebug/vdebug'
 

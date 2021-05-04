@@ -88,7 +88,7 @@ let g:currentmode={
 set laststatus=2
 set statusline=
 set statusline+=\ %{g:currentmode[mode()]}
-set statusline+=%8*\ Buffer[%n]                                " buffernr
+set statusline+=%8*\ BufferNr:\ [%n]                          " buffernr
 set statusline+=\ %f
 set statusline+=%#warningmsg#
 set statusline+=\ %=%y
@@ -102,6 +102,7 @@ set noshowmode
 
 let g:coc_global_extensions = ['coc-phpls', 'coc-json', 'coc-tsserver']
 nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> grn <Plug>(coc-rename)
 
 " Let <Tab> also do completion
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -113,9 +114,11 @@ nnoremap <leader>g :GFiles<cr>
 nnoremap <leader>t :Tags<cr>
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>r :Rg<cr>
+
 nnoremap <leader>n :NERDTreeToggle<cr>
 nnoremap <leader>nt :NERDTreeToggle<cr>
 nnoremap <leader>nf :NERDTreeFind<cr>
+nnoremap <leader><leader> :buffer #<cr>
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1

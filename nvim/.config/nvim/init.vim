@@ -101,10 +101,6 @@ set statusline+=\ %L
 " mode information is displayed in the statusline we dont need it anymore
 set noshowmode
 
-" let g:coc_global_extensions = ['coc-json', 'coc-tsserver']
-" nmap <silent> gd <Plug>(coc-definition)
-" nmap <silent> grn <Plug>(coc-rename)
-
 " Let <Tab> also do completion
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"

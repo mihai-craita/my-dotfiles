@@ -35,12 +35,15 @@ call plug#begin()
     Plug 'vim-syntastic/syntastic'
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-lua/completion-nvim'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
     Plug 'stephpy/vim-php-cs-fixer'
     Plug 'sheerun/vim-polyglot'
     Plug 'junegunn/vim-easy-align'
     Plug 'mhinz/vim-startify'
+
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
     " colors packs, find more on http://vimcolors.com/
     Plug 'morhetz/gruvbox'
@@ -52,6 +55,7 @@ call plug#begin()
 
     "fonts
     Plug 'ryanoasis/vim-devicons'
+    Plug 'kyazdani42/nvim-web-devicons'
     Plug 'bryanmylee/vim-colorscheme-icons'
 
 call plug#end()
@@ -112,20 +116,20 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
-" Shortcuts for using fzf in vim
-nnoremap <leader>f :Files<cr>
-nnoremap <leader>g :GFiles<cr>
+" telescope setup
+nnoremap <leader>f :Telescope find_files<cr>
+nnoremap <leader>g :Telescope find_files<cr>
 nnoremap <leader>t :Tags<cr>
-nnoremap <leader>b :Buffers<cr>
-nnoremap <leader>r :Rg<cr>
+nnoremap <leader>t <cmd>lua require('telescope.builtin').tags()<cr>
+nnoremap <leader>t <cmd>lua require('telescope.builtin').current_buffer_tags()<cr>
+nnoremap <leader>b :Telescope buffers<cr>
+nnoremap <leader>r :Telescope live_grep<cr>
+" end telescope setup
 
 nnoremap <leader>n :NERDTreeToggle<cr>
 nnoremap <leader>nt :NERDTreeToggle<cr>
 nnoremap <leader>nf :NERDTreeFind<cr>
 nnoremap <leader><leader> :buffer #<cr>
-
-" [Buffers] Jump to the existing window if possible
-let g:fzf_buffers_jump = 1
 
 let g:php_cs_fixer_rules = "@PSR12"
 autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
@@ -150,6 +154,7 @@ lua << EOF
 require'lspconfig'.intelephense.setup{}
 require'lspconfig'.tsserver.setup{}
 require'lspconfig'.intelephense.setup{on_attach=require'completion'.on_attach}
+require('telescope').load_extension('fzf')
 EOF
 
 " Use completion-nvim in every buffer

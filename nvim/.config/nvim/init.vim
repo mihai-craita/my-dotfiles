@@ -33,13 +33,17 @@ call plug#begin()
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
     Plug 'vim-syntastic/syntastic'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'nvim-lua/completion-nvim'
+    Plug 'stephpy/vim-php-cs-fixer'
     Plug 'sheerun/vim-polyglot'
     Plug 'junegunn/vim-easy-align'
     Plug 'mhinz/vim-startify'
-    Plug 'vim-vdebug/vdebug'
+
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
     " colors packs, find more on http://vimcolors.com/
     Plug 'morhetz/gruvbox'
@@ -51,6 +55,7 @@ call plug#begin()
 
     "fonts
     Plug 'ryanoasis/vim-devicons'
+    Plug 'kyazdani42/nvim-web-devicons'
     Plug 'bryanmylee/vim-colorscheme-icons'
 
 call plug#end()
@@ -88,7 +93,7 @@ let g:currentmode={
 set laststatus=2
 set statusline=
 set statusline+=\ %{g:currentmode[mode()]}
-set statusline+=%8*\ Buffer[%n]                                " buffernr
+set statusline+=%8*\ BufferNr:\ [%n]                          " buffernr
 set statusline+=\ %f
 set statusline+=%#warningmsg#
 set statusline+=\ %=%y
@@ -100,25 +105,31 @@ set statusline+=\ %L
 " mode information is displayed in the statusline we dont need it anymore
 set noshowmode
 
-let g:coc_global_extensions = ['coc-phpls', 'coc-json', 'coc-tsserver']
-nmap <silent> gd <Plug>(coc-definition)
-
 " Let <Tab> also do completion
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Shortcuts for using fzf in vim
-nnoremap <leader>f :Files<cr>
-nnoremap <leader>g :GFiles<cr>
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+" telescope setup
+nnoremap <leader>f :Telescope find_files<cr>
+nnoremap <leader>g :Telescope find_files<cr>
 nnoremap <leader>t :Tags<cr>
-nnoremap <leader>b :Buffers<cr>
-nnoremap <leader>r :Rg<cr>
+nnoremap <leader>t <cmd>lua require('telescope.builtin').tags()<cr>
+nnoremap <leader>t <cmd>lua require('telescope.builtin').current_buffer_tags()<cr>
+nnoremap <leader>b :Telescope buffers<cr>
+nnoremap <leader>r :Telescope live_grep<cr>
+" end telescope setup
+
 nnoremap <leader>n :NERDTreeToggle<cr>
 nnoremap <leader>nt :NERDTreeToggle<cr>
 nnoremap <leader>nf :NERDTreeFind<cr>
-
-" [Buffers] Jump to the existing window if possible
-let g:fzf_buffers_jump = 1
+nnoremap <leader><leader> :buffer #<cr>
 
 let g:php_cs_fixer_rules = "@PSR12"
 autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
@@ -135,3 +146,27 @@ let g:startify_commands = [
             \ {'n': ['Open NERDTree', 'NERDTreeToggle']},
             \ {'h': ['Help Startify', 'h startify']},
             \ ]
+
+
+
+" language servers setup for neovim nvim-lspconfig
+lua << EOF
+require'lspconfig'.intelephense.setup{}
+require'lspconfig'.tsserver.setup{}
+require'lspconfig'.intelephense.setup{on_attach=require'completion'.on_attach}
+require('telescope').load_extension('fzf')
+EOF
+
+" Use completion-nvim in every buffer
+autocmd BufEnter * lua require'completion'.on_attach()
+
+nnoremap gd :lua vim.lsp.buf.definition()<CR>
+nnoremap <leader>vi :lua vim.lsp.buf.implementation()<CR>
+nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
+nnoremap <leader>vrr :lua vim.lsp.buf.references()<CR>
+nnoremap grn :lua vim.lsp.buf.rename()<CR>
+nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
+nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
+nnoremap <leader>vsd :lua vim.lsp.diagnostic.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>
+nnoremap <leader>vn :lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <leader>vll :call LspLocationList()<CR>

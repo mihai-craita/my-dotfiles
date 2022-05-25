@@ -1,0 +1,12 @@
+{
+    "Public function": {
+        "prefix": ["pf", "fun", "func"],
+        "body": [
+            "${1|public,private,protected|} function ${2:functionName}(${3:$param}): ${4:type}"
+            "{",
+            "\t$0",
+            "}"
+        ],
+        "description" : "Add a public function"
+    }
+}

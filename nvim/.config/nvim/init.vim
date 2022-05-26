@@ -130,7 +130,7 @@ nnoremap <leader><leader> :buffer #<cr>
 
 let g:php_cs_fixer_rules = "@PSR12"
 autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
-autocmd FileType php set iskeyword+=$
+autocmd FileType php setlocal iskeyword-=$
 
 " Syntastic configuration for PHP
 let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']

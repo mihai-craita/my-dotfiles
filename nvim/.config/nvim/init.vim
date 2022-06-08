@@ -220,6 +220,8 @@ require'lspconfig'.intelephense.setup {
   capabilities = capabilities,
 }
 
+require'lspconfig'.gopls.setup{}
+
 require'lspconfig'.tsserver.setup{
   capabilities = capabilities,
 }

@@ -36,6 +36,7 @@ call plug#begin()
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-buffer'
     Plug 'stephpy/vim-php-cs-fixer'
     Plug 'sheerun/vim-polyglot'
     Plug 'junegunn/vim-easy-align'
@@ -130,7 +131,7 @@ nnoremap <leader><leader> :buffer #<cr>
 
 let g:php_cs_fixer_rules = "@PSR12"
 autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
-autocmd FileType php set iskeyword+=$
+autocmd FileType php set iskeyword-=$
 
 " Syntastic configuration for PHP
 let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']

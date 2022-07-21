@@ -1,5 +1,3 @@
-filetype plugin indent on
-syntax on
 set noswapfile     " no swap files
 set nobackup       " no backup files
 set nowritebackup  " only in case you don't want a backup file while editing

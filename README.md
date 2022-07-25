@@ -17,3 +17,8 @@ mkdir nvim
 ```
 
 make a path exactly like in the home directory eg. .config/nvim/ where you add all the dot files.
+
+### NVIM
+
+install language servers, eg. npm i intelephense -g
+

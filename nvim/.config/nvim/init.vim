@@ -1,5 +1,3 @@
-filetype plugin indent on
-syntax on
 set noswapfile     " no swap files
 set nobackup       " no backup files
 set nowritebackup  " only in case you don't want a backup file while editing
@@ -14,9 +12,6 @@ set hidden                  " Hide buffers when they are abandoned
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
-
-" use true colors palette on 24 bits (16 million colors)
-set termguicolors
 
 set number
 set relativenumber
@@ -34,8 +29,9 @@ call plug#begin()
     Plug 'tpope/vim-fugitive'
     Plug 'vim-syntastic/syntastic'
     Plug 'neovim/nvim-lspconfig'
-    Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-buffer'
     Plug 'stephpy/vim-php-cs-fixer'
     Plug 'sheerun/vim-polyglot'
     Plug 'junegunn/vim-easy-align'
@@ -51,12 +47,12 @@ call plug#begin()
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
     " colors packs, find more on http://vimcolors.com/
-    Plug 'morhetz/gruvbox'
-    Plug 'lifepillar/vim-solarized8'
-    Plug 'andbar-ru/vim-unicon'
+    Plug 'ellisonleao/gruvbox.nvim'
+    Plug 'sainnhe/sonokai'
     Plug 'mhartington/oceanic-next'
-    Plug 'trusktr/seti.vim'
-    Plug 'drewtempelmeyer/palenight.vim'
+    Plug 'savq/melange'
+    Plug 'ishan9299/nvim-solarized-lua'
+    Plug 'marko-cerovac/material.nvim'
 
     "fonts
     Plug 'ryanoasis/vim-devicons'
@@ -66,11 +62,6 @@ call plug#begin()
 call plug#end()
 
 let mapleader=","
-
-" Colorschemes
-let g:gruvbox_italic=1
-colorscheme gruvbox
-set background=dark
 
 " statusline
 let g:currentmode={
@@ -113,16 +104,6 @@ set noshowmode
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
-" telescope setup
-nnoremap <leader>f :Telescope find_files<cr>
-nnoremap <leader>g :Telescope find_files<cr>
-nnoremap <leader>t :Tags<cr>
-nnoremap <leader>t <cmd>lua require('telescope.builtin').tags()<cr>
-nnoremap <leader>t <cmd>lua require('telescope.builtin').current_buffer_tags()<cr>
-nnoremap <leader>b :Telescope buffers<cr>
-nnoremap <leader>r :Telescope live_grep<cr>
-" end telescope setup
-
 nnoremap <leader>n :NERDTreeToggle<cr>
 nnoremap <leader>nt :NERDTreeToggle<cr>
 nnoremap <leader>nf :NERDTreeFind<cr>
@@ -145,89 +126,7 @@ let g:startify_commands = [
             \ ]
 
 
-
-" language servers setup for neovim nvim-lspconfig
-lua << EOF
-
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-
-local cmp = require 'cmp'
-cmp.setup {
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-          vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      end,
-    },
-    mapping = cmp.mapping.preset.insert({
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<CR>'] = cmp.mapping.confirm {
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
-        },
-        ['<Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-              cmp.select_next_item()
-          elseif vim.fn["vsnip#available"](1) == 1 then
-              feedkey("<Plug>(vsnip-expand-or-jump)", "")
-          -- elseif luasnip.expand_or_jumpable() then
-            -- luasnip.expand_or_jump()
-          elseif has_words_before() then
-              cmp.complete()
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-        elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-            feedkey("<Plug>(vsnip-jump-prev)", "")
-          -- elseif luasnip.jumpable(-1) then
-        -- luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-    }),
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'vsnip' }
-        } , {
-            { name = 'buffer' },
-        }
-    )
-}
-
--- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
--- The following example advertise capabilities to `clangd`.
-require'lspconfig'.intelephense.setup {
-  capabilities = capabilities,
-}
-
-require'lspconfig'.gopls.setup{}
-
-require'lspconfig'.tsserver.setup{
-  capabilities = capabilities,
-}
-require('telescope').load_extension('fzf')
-
-EOF
+lua require("extra")
 
 " Expand
 imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
@@ -236,14 +135,3 @@ smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j
 " Expand or jump
 imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
 smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-
-nnoremap gd :lua vim.lsp.buf.definition()<CR>
-nnoremap <leader>vi :lua vim.lsp.buf.implementation()<CR>
-nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
-nnoremap <leader>vrr :lua vim.lsp.buf.references()<CR>
-nnoremap grn :lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
-nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
-nnoremap <leader>vsd :lua vim.lsp.diagnostic.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>
-nnoremap <leader>vn :lua vim.lsp.diagnostic.goto_next()<CR>
-nnoremap <leader>vll :call LspLocationList()<CR>

@@ -6,6 +6,7 @@ set noshowmatch    " no matching chars
 set tabstop=4 softtabstop=4 shiftwidth=4
 set smarttab
 set expandtab               " on tab press insert spaces
+set smartindent
 set list                    " Display spaces and tabs and oddities (like non-breaking white-space)
 set showcmd                 " Show (partial) command available in status line
 set hidden                  " Hide buffers when they are abandoned
@@ -46,7 +47,11 @@ call plug#begin()
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
+    " show context up
     Plug 'nvim-treesitter/nvim-treesitter-context'
+
+    " statusline
+    Plug 'feline-nvim/feline.nvim'
 
     " colors packs, find more on http://vimcolors.com/
     Plug 'ellisonleao/gruvbox.nvim'
@@ -64,47 +69,6 @@ call plug#begin()
 call plug#end()
 
 let mapleader=","
-
-" statusline
-let g:currentmode={
-            \ 'n'  : 'NORMAL ',
-            \ 'no' : 'N·Operator Pending ',
-            \ 'v'  : 'V ',
-            \ 'V'  : 'V·Line ',
-            \ 'x22' : 'V·Block ',
-            \ 's'  : 'Select ',
-            \ 'S'  : 'S·Line ',
-            \ 'x19' : 'S·Block ',
-            \ 'i'  : 'INSERT ',
-            \ 'R'  : 'R ',
-            \ 'Rv' : 'V·Replace ',
-            \ 'c'  : 'Command ',
-            \ 'cv' : 'Vim Ex ',
-            \ 'ce' : 'Ex ',
-            \ 'r'  : 'Prompt ',
-            \ 'rm' : 'More ',
-            \ 'r?' : 'Confirm ',
-            \ '!'  : 'Shell ',
-            \ 't'  : 'Terminal '
-            \}
-
-set laststatus=2
-set statusline=
-set statusline+=\ %{g:currentmode[mode()]}
-set statusline+=%8*\ BufferNr:\ [%n]                          " buffernr
-set statusline+=\ %f
-set statusline+=%#warningmsg#
-set statusline+=\ %=%y
-set statusline+=%#StatusLine#
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding} "fileencoding e.g utf-8
-set statusline+=\ %p%%
-set statusline+=\ %l:%c
-set statusline+=\ %L
-" mode information is displayed in the statusline we dont need it anymore
-set noshowmode
-
-" Avoid showing message extra message when using completion
-set shortmess+=c
 
 nnoremap <leader>n :NERDTreeToggle<cr>
 nnoremap <leader>nt :NERDTreeToggle<cr>

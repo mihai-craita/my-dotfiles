@@ -21,9 +21,6 @@ set cursorline
 " gutter limit
 set colorcolumn=121
 
-" remove highlighted text when enter is pressed
-nnoremap <silent> <CR> :nohlsearch<cr><esc>
-
 call plug#begin()
     Plug 'scrooloose/nerdtree'
     Plug 'tpope/vim-commentary'
@@ -68,12 +65,7 @@ call plug#begin()
 
 call plug#end()
 
-let mapleader=","
-
-nnoremap <leader>n :NERDTreeToggle<cr>
-nnoremap <leader>nt :NERDTreeToggle<cr>
-nnoremap <leader>nf :NERDTreeFind<cr>
-nnoremap <leader><leader> :buffer #<cr>
+lua require("extra")
 
 let g:php_cs_fixer_rules = "@PSR12"
 autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
@@ -91,8 +83,6 @@ let g:startify_commands = [
             \ {'h': ['Help Startify', 'h startify']},
             \ ]
 
-
-lua require("extra")
 
 " Expand
 imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'

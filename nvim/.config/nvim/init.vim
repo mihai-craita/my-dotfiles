@@ -46,6 +46,8 @@ call plug#begin()
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
+    Plug 'nvim-treesitter/nvim-treesitter-context'
+
     " colors packs, find more on http://vimcolors.com/
     Plug 'ellisonleao/gruvbox.nvim'
     Plug 'sainnhe/sonokai'

@@ -14,6 +14,7 @@ vim.keymap.set("n", "<leader>nt", "<cmd>NERDTreeToggle<CR>", { silent = true})
 vim.keymap.set("n", "<leader>nf", "<cmd>NERDTreeFind<CR>", { silent = true})
 vim.keymap.set("n", "<leader><leader>", "<cmd>buffer #<CR>", { silent = true})
 vim.keymap.set("n", "<leader>s", "<cmd>lua require('telescope.builtin').find_files({default_text=vim.fn.expand('<cword>')})<cr>", { silent = true })
+vim.keymap.set("n", "<leader>t", "<cmd>bo 10split term://$SHELL<cr>A", { silent = true })
 
 require("plugins.cmp")
 require("plugins.lsp")

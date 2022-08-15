@@ -16,12 +16,10 @@ return require('packer').startup(function(use)
   use { 'scrooloose/nerdtree', cmd = { 'NERDTree', 'NERDTreeFind', 'NERDTreeFocus', 'NERDTreeToggle' } }
   use 'tpope/vim-commentary'
   use 'tpope/vim-fugitive'
-  use 'vim-syntastic/syntastic'
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
-  -- use { 'stephpy/vim-php-cs-fixer', ft={ 'php' } }
   use 'sheerun/vim-polyglot'
   use 'junegunn/vim-easy-align'
   use 'mhinz/vim-startify'

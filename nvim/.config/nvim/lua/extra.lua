@@ -48,3 +48,27 @@ require("plugins.lsp")
 require("plugins.telescope")
 require("plugins.treesitter")
 require("plugins.feline")
+
+-- Syntastic configuration for PHP
+vim.api.nvim_set_var('php_cs_fixer_rules', '@PSR12')
+vim.api.nvim_set_var('syntastic_php_checkers', {'php', 'phpcs', 'phpmd'})
+vim.api.nvim_set_var('syntastic_php_phpcs_args', '--standard=psr12')
+vim.api.nvim_set_var('syntastic_php_phpmd_post_args', 'cleancode,codesize,controversial,design,unusedcode')
+
+-- autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
+vim.api.nvim_create_autocmd({"BufWritePost"}, {
+        pattern = { "*.php" },
+        command = "silent! call PhpCsFixerFixFile()",
+    })
+vim.api.nvim_create_autocmd({"FileType"}, {
+        pattern = {"php"}, 
+        command = "setlocal iskeyword-=$",
+    })
+
+-- startify setup
+vim.api.nvim_set_var('startify_files_number', 7)
+vim.api.nvim_set_var('startify_bookmarks', { {c = '~/.config/nvim/lua/extra.lua'} })
+vim.api.nvim_set_var('startify_commands', {
+        {n = {'Open NERDTree', 'NERDTreeToggle'}},
+        {h = {'Help Startify', 'h startify'}}
+    })

@@ -1,10 +1,37 @@
 --
 -- LUA config file
 --
+vim.opt.swapfile = false
+vim.opt.backup = false
+
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.smarttab = true
+vim.opt.smartindent = true
+vim.opt.list = true
+
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+vim.opt.cursorline = true
+-- gutter limit
+vim.opt.colorcolumn="121"
 
 vim.g.mapleader = ","
 -- use true colors palette on 24 bits (16 million colors)
 vim.opt.termguicolors = true
+
+-- Don't pass messages to |ins-completion-menu|.
+vim.opt.shortmess:append("c")
+
+require('plugins.packer')
+
+-- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+-- delays and poor user experience.
+vim.opt.updatetime = 50
+
 vim.g.my_colorscheme = "OceanicNext"
 vim.cmd("colorscheme " .. vim.g.my_colorscheme)
 --- remove highlighted text when enter is pressed

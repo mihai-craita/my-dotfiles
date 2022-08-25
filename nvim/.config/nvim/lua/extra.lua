@@ -49,6 +49,28 @@ require("plugins.telescope")
 require("plugins.treesitter")
 require("plugins.feline")
 
+local getToSymfonyControllerFun = function()
+    local fullWord = vim.fn.expand('<cWORD>')
+    local t = {}
+    for str in string.gmatch(fullWord, "([^"..":".."]+)") do
+        table.insert(t, str)
+    end
+    local functionName = t[#t] .. 'Action'
+    table.remove(t, #t)
+    local controllerName = table.concat(t) .. 'Controller'
+    print("Call symfony for: " .. functionName .. ' ' .. controllerName)
+    require('telescope.builtin').find_files({
+        default_text = controllerName,
+    })
+end
+local mapKeyForYaml = function()
+    vim.keymap.set("n", "gd", getToSymfonyControllerFun)
+end
+vim.api.nvim_create_autocmd({"FileType"}, {
+        pattern = {"yaml"},
+        callback = mapKeyForYaml
+    })
+
 vim.api.nvim_create_autocmd({"FileType"}, {
         pattern = {"php"}, 
         command = "setlocal iskeyword-=$",

@@ -4,6 +4,7 @@ local on_attach = function(client, bufnr)
     local opts = { buffer = bufnr, noremap = true, silent = true }
 
     vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+    vim.keymap.set("n", "grn", vim.lsp.buf.rename, opts)
     vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
     -- go to next error
     vim.keymap.set("n", "<leader>e", vim.diagnostic.goto_next, opts)

@@ -32,8 +32,14 @@ require('plugins.packer')
 -- delays and poor user experience.
 vim.opt.updatetime = 50
 
+-- A comma-separated list of options for Insert mode completion
+vim.opt.completeopt = {"menu","menuone","noselect"}
+
+vim.opt.clipboard = "unnamedplus"
+
 vim.g.my_colorscheme = "OceanicNext"
 vim.cmd("colorscheme " .. vim.g.my_colorscheme)
+
 --- remove highlighted text when enter is pressed
 vim.keymap.set({"n", "v"}, "<CR>", "<cmd>nohlsearch<CR><ESC>", { silent = true})
 vim.keymap.set("n", "<leader>n", "<cmd>NERDTreeToggle<CR>", { silent = true})

@@ -72,14 +72,13 @@ vim.api.nvim_create_autocmd({"FileType"}, {
     })
 
 vim.api.nvim_create_autocmd({"FileType"}, {
-        pattern = {"php"}, 
+        pattern = {"php"},
         command = "setlocal iskeyword-=$",
     })
 
--- startify setup
-vim.api.nvim_set_var('startify_files_number', 7)
-vim.api.nvim_set_var('startify_bookmarks', { {c = '~/.config/nvim/lua/extra.lua'} })
-vim.api.nvim_set_var('startify_commands', {
-        {n = {'Open NERDTree', 'NERDTreeToggle'}},
-        {h = {'Help Startify', 'h startify'}}
-    })
+require("plugins.startify")
+
+local save_and_exec = function()
+    print("save and exec")
+end
+vim.keymap.set("n", "gy", save_and_exec)

@@ -24,6 +24,9 @@ return require('packer').startup(function(use)
   use 'junegunn/vim-easy-align'
   use 'mhinz/vim-startify'
 
+  -- neovim completion library for lua language
+  use 'ii14/emmylua-nvim'
+
   use 'rafamadriz/friendly-snippets'
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'

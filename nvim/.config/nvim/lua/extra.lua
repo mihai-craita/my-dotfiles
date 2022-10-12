@@ -48,6 +48,7 @@ require("plugins.lsp")
 require("plugins.telescope")
 require("plugins.treesitter")
 require("plugins.feline")
+require("plugins.startify")
 
 local getToSymfonyControllerFun = function()
     local fullWord = vim.fn.expand('<cWORD>')
@@ -76,9 +77,20 @@ vim.api.nvim_create_autocmd({"FileType"}, {
         command = "setlocal iskeyword-=$",
     })
 
-require("plugins.startify")
 
-local save_and_exec = function()
-    print("save and exec")
+local save_and_source = function()
+
+    -- save current buffer
+    local writeBufCmd = vim.api.nvim_parse_cmd("silent write", {})
+    vim.api.nvim_cmd(writeBufCmd, {})
+
+    -- source file
+    local sourceCmd = "source %"
+    if (vim.bo.filetype == "lua") then
+        sourceCmd = "luafile %"
+    end
+    local parsedSourceCmd = vim.api.nvim_parse_cmd(sourceCmd, {})
+    vim.api.nvim_cmd(parsedSourceCmd, {})
+    print("Sourced " .. vim.bo.filetype .. " file: " .. vim.fn.expand("%:t"))
 end
-vim.keymap.set("n", "gy", save_and_exec)
+vim.keymap.set("n", "<leader>x", save_and_source)

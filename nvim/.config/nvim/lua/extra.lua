@@ -51,6 +51,7 @@ vim.keymap.set("n", "<leader>t", "<cmd>bo 10split term://$SHELL<cr>A", { silent 
 
 require("plugins.cmp")
 require("plugins.lsp")
+require("plugins.luasnip")
 require("plugins.telescope")
 require("plugins.treesitter")
 require("plugins.feline")

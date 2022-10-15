@@ -2,6 +2,8 @@ local ls = require("luasnip")
 
 -- load vscode snippets from friendly-snippets plugin
 require("luasnip.loaders.from_vscode").lazy_load()
+-- load snipmate format snippets
+require("luasnip.loaders.from_snipmate").lazy_load()
 
 -- set keybinds for both INSERT and VISUAL.
 -- For changing choices in choiceNodes (not strictly necessary for a basic setup).

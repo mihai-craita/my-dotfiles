@@ -23,7 +23,10 @@ return require('packer').startup(function(use)
   use 'saadparwaiz1/cmp_luasnip'
   use 'hrsh7th/nvim-cmp'
   use ({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
+
+  -- snippets sources
   use 'rafamadriz/friendly-snippets'
+  use 'honza/vim-snippets'
 
   use 'sheerun/vim-polyglot'
   use 'junegunn/vim-easy-align'

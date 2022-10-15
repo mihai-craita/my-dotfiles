@@ -46,9 +46,9 @@ ls.add_snippets("php", {
             dscr = "Getter and setter function for attr"
         },
         {
-            text({"/**", "* @var "}),
+            text({"/**", " * @var "}),
             fnode(same, {2}, {}),
-            text({"", "*/", "private "}),
+            text({"", " */", "private "}),
             choice(2, {
                 text("string"),
                 text("int"),

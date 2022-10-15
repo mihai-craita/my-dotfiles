@@ -23,16 +23,14 @@ return require('packer').startup(function(use)
   use 'saadparwaiz1/cmp_luasnip'
   use 'hrsh7th/nvim-cmp'
   use ({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
+  use 'rafamadriz/friendly-snippets'
+
   use 'sheerun/vim-polyglot'
   use 'junegunn/vim-easy-align'
   use 'mhinz/vim-startify'
 
-  -- neovim completion library for lua language
+  -- neovim completion library for lua language nvim library
   use 'ii14/emmylua-nvim'
-
-  use 'rafamadriz/friendly-snippets'
-  use 'hrsh7th/vim-vsnip'
-  use 'hrsh7th/vim-vsnip-integ'
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-lua/plenary.nvim'

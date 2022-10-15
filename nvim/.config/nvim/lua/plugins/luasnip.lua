@@ -1,5 +1,8 @@
 local ls = require("luasnip")
 
+-- load vscode snippets from friendly-snippets plugin
+require("luasnip.loaders.from_vscode").lazy_load()
+
 -- set keybinds for both INSERT and VISUAL.
 -- For changing choices in choiceNodes (not strictly necessary for a basic setup).
 vim.keymap.set("i", "<C-n>", function() if ls.choice_active() then ls.change_choice(1) end end, {})

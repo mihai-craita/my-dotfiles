@@ -54,6 +54,13 @@ return require('packer').startup(function(use)
   use 'savq/melange'
   use 'ishan9299/nvim-solarized-lua'
   use 'marko-cerovac/material.nvim'
+  use({
+    'rose-pine/neovim',
+    as = 'rose-pine',
+    config = function()
+      vim.cmd('colorscheme rose-pine')
+    end
+  })
 
   -- fonts
   use 'ryanoasis/vim-devicons'

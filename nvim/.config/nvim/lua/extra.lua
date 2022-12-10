@@ -37,7 +37,7 @@ vim.opt.completeopt = {"menu","menuone","noselect"}
 
 vim.opt.clipboard = "unnamedplus"
 
-vim.g.my_colorscheme = "rose-pine"
+vim.g.my_colorscheme = "gruvbox"
 vim.cmd("colorscheme " .. vim.g.my_colorscheme)
 
 --- remove highlighted text when enter is pressed

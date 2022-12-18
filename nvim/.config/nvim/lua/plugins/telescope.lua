@@ -1,5 +1,5 @@
 -- Telescope configs
-require('telescope').load_extension('fzf')
+pcall(require('telescope').load_extension, 'fzf')
 vim.keymap.set("n", "<leader>f", "<cmd>Telescope find_files<CR>")
 vim.keymap.set("n", "<leader>g", "<cmd>Telescope git_files<CR>")
 vim.keymap.set("n", "<leader>T", "<cmd>lua require('telescope.builtin').tags()<CR>")

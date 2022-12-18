@@ -1,12 +1,13 @@
 -- install packer from github if is not found on the system
-local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local is_bootstrap = false
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  is_bootstrap = true
+  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
   vim.cmd [[packadd packer.nvim]]
 end
 
-return require('packer').startup(function(use)
+require('packer').startup(function(use)
   -- My plugins here
   -- use 'foo1/bar1.nvim'
   -- use 'foo2/bar2.nvim'
@@ -18,34 +19,45 @@ return require('packer').startup(function(use)
   use 'tpope/vim-fugitive'
 
   use 'neovim/nvim-lspconfig'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-cmdline'
-  use 'saadparwaiz1/cmp_luasnip'
-  use 'hrsh7th/nvim-cmp'
-  use 'L3MON4D3/LuaSnip'
+
+  use { -- Autocompletion
+    'hrsh7th/nvim-cmp',
+    requires = { 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-cmdline', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+  }
+  -- neovim completion library for lua language nvim library
+  use { 'ii14/emmylua-nvim', ft = { 'lua' }, after = 'nvim-cmp' }
 
   -- snippets sources
   use 'rafamadriz/friendly-snippets'
   use 'honza/vim-snippets'
 
-  use 'sheerun/vim-polyglot'
   use 'junegunn/vim-easy-align'
   use 'mhinz/vim-startify'
 
-  -- neovim completion library for lua language nvim library
-  use { 'ii14/emmylua-nvim', ft = { 'lua' } }
+  use { -- Highlight, edit, and navigate code
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      pcall(require('nvim-treesitter.install').update { with_sync = true })
+    end,
+  }
 
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use 'nvim-lua/plenary.nvim'
-  use 'nvim-telescope/telescope.nvim'
-  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use { -- Additional text objects via treesitter
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    after = 'nvim-treesitter',
+  }
+
+  -- Fuzzy Finder (files, lsp, etc)
+  use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+  use {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'make',
+    after = 'telescope.nvim'
+  }
 
   -- show context up
   use 'nvim-treesitter/nvim-treesitter-context'
 
-  -- statusline
-  use 'feline-nvim/feline.nvim'
+  use 'nvim-lualine/lualine.nvim' -- Fancier statusline
 
   -- colors packs, find more on http://vimcolors.com/
   use 'ellisonleao/gruvbox.nvim'
@@ -54,22 +66,26 @@ return require('packer').startup(function(use)
   use 'savq/melange'
   use 'ishan9299/nvim-solarized-lua'
   use 'marko-cerovac/material.nvim'
-  use({
-    'rose-pine/neovim',
-    as = 'rose-pine',
-    config = function()
-      vim.cmd('colorscheme rose-pine')
-    end
-  })
+  use 'rose-pine/neovim'
 
-  -- fonts
-  use 'ryanoasis/vim-devicons'
-  use 'kyazdani42/nvim-web-devicons'
-  use 'bryanmylee/vim-colorscheme-icons'
+  use 'kyazdani42/nvim-web-devicons' -- fonts
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
-  if packer_bootstrap then
+  if is_bootstrap then
     require('packer').sync()
   end
 end)
+
+-- When we are bootstrapping a configuration, it doesn't
+-- make sense to execute the rest of the init.lua.
+--
+-- You'll need to restart nvim, and then it will work.
+if is_bootstrap then
+  print '=================================='
+  print '    Plugins are being installed'
+  print '    Wait until Packer completes,'
+  print '       then restart nvim'
+  print '=================================='
+  return
+end

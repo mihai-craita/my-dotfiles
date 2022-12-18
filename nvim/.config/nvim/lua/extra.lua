@@ -11,34 +11,54 @@ vim.opt.expandtab = true
 vim.opt.smarttab = true
 vim.opt.smartindent = true
 vim.opt.list = false
+-- Enable break indent
+vim.o.breakindent = true
 
-vim.opt.number = true
+-- Make line numbers default
+vim.wo.number = true
 vim.opt.relativenumber = true
 
-vim.opt.cursorline = true
--- gutter limit
-vim.opt.colorcolumn="121"
+-- Case insensitive searching UNLESS /C or capital in search
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
-vim.g.mapleader = ","
+vim.opt.cursorline = true
+
 -- use true colors palette on 24 bits (16 million colors)
-vim.opt.termguicolors = true
+vim.o.termguicolors = true
 
 -- Don't pass messages to |ins-completion-menu|.
 vim.opt.shortmess:append("c")
+
+-- [[ Basic Keymaps ]]
+-- Set <space> as the leader key
+-- See `:help mapleader`
+--  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
+
+-- Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 require('plugins.packer')
 
 -- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 -- delays and poor user experience.
-vim.opt.updatetime = 50
+vim.opt.updatetime = 250
+vim.wo.signcolumn = 'yes'
 
--- A comma-separated list of options for Insert mode completion
-vim.opt.completeopt = {"menu","menuone","noselect"}
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = 'menuone,noselect'
 
 vim.opt.clipboard = "unnamedplus"
 
+vim.o.background = "dark"
 vim.g.my_colorscheme = "gruvbox"
 vim.cmd("colorscheme " .. vim.g.my_colorscheme)
+
+-- Set highlight on search
+vim.o.hlsearch = false
 
 --- remove highlighted text when enter is pressed
 vim.keymap.set({"n", "v"}, "<CR>", "<cmd>nohlsearch<CR><ESC>", { silent = true})
@@ -54,7 +74,7 @@ require("plugins.lsp")
 require("plugins.luasnip")
 require("plugins.telescope")
 require("plugins.treesitter")
-require("plugins.feline")
+require("plugins.lualine")
 require("plugins.startify")
 
 local getToSymfonyControllerFun = function()

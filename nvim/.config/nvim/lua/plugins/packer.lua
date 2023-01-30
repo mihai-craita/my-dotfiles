@@ -33,6 +33,7 @@ require('packer').startup(function(use)
 
   use 'junegunn/vim-easy-align'
   use 'mhinz/vim-startify'
+  use 'jwalton512/vim-blade'
 
   use { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',

@@ -27,6 +27,11 @@ require'lspconfig'.tsserver.setup{
   on_attach = on_attach,
 }
 
+require'lspconfig'.pyright.setup{
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
+
 local runtime_path = vim.split(package.path, ";", {})
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")

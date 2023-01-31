@@ -22,6 +22,12 @@ require'lspconfig'.gopls.setup{
   on_attach = on_attach,
 }
 
+require'lspconfig'.rust_analyzer.setup{
+    cmd = { "rustup", "run", "stable", "rust-analyzer"},
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
+
 require'lspconfig'.tsserver.setup{
   capabilities = capabilities,
   on_attach = on_attach,

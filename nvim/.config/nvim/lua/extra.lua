@@ -51,7 +51,8 @@ vim.wo.signcolumn = 'yes'
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
-vim.opt.clipboard = "unnamedplus"
+-- disable mouse 
+vim.opt.mouse = nil
 
 vim.o.background = "dark"
 vim.g.my_colorscheme = "gruvbox"

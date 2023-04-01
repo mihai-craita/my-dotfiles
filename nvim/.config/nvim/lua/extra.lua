@@ -22,8 +22,12 @@ vim.opt.relativenumber = true
 -- Case insensitive searching UNLESS /C or capital in search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+-- Set highlight on search
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
 
 vim.opt.cursorline = true
+vim.opt.scrolloff = 12
 
 -- use true colors palette on 24 bits (16 million colors)
 vim.opt.termguicolors = true
@@ -59,9 +63,6 @@ vim.opt.background = "dark"
 vim.g.edge_style = 'aura'
 vim.g.my_colorscheme = "edge"
 vim.cmd("colorscheme " .. vim.g.my_colorscheme)
-
--- Set highlight on search
-vim.opt.hlsearch = false
 
 --- remove highlighted text when enter is pressed
 vim.keymap.set({"n", "v"}, "<CR>", "<cmd>nohlsearch<CR><ESC>", { silent = true})

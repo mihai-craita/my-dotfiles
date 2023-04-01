@@ -41,7 +41,8 @@ require('packer').startup(function(use)
                 end,
             },
             {'williamboman/mason-lspconfig.nvim'}, -- Optional
-            {'mfussenegger/nvim-dap'}, -- Optional
+            {'mfussenegger/nvim-dap'},             -- Optional
+            {'jose-elias-alvarez/null-ls.nvim'},   -- Optional
 
             -- Autocompletion
             {'hrsh7th/nvim-cmp'},     -- Required

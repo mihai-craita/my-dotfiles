@@ -3,6 +3,8 @@
 --
 vim.opt.swapfile = false
 vim.opt.backup = false
+vim.opt.undodir = os.getenv("HOME") .. ".nvim/undodir"
+vim.opt.undofile = true
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -12,20 +14,20 @@ vim.opt.smarttab = true
 vim.opt.smartindent = true
 vim.opt.list = false
 -- Enable break indent
-vim.o.breakindent = true
+vim.opt.breakindent = true
 
 -- Make line numbers default
-vim.wo.number = true
+vim.opt.number = true
 vim.opt.relativenumber = true
 
 -- Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 vim.opt.cursorline = true
 
 -- use true colors palette on 24 bits (16 million colors)
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 
 -- Don't pass messages to |ins-completion-menu|.
 vim.opt.shortmess:append("c")
@@ -46,20 +48,21 @@ require('plugins.packer')
 -- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 -- delays and poor user experience.
 vim.opt.updatetime = 250
-vim.wo.signcolumn = 'yes'
+vim.opt.signcolumn = 'yes'
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.opt.completeopt = 'menuone,noselect'
 
 -- disable mouse 
 vim.opt.mouse = nil
 
-vim.o.background = "dark"
-vim.g.my_colorscheme = "gruvbox"
+vim.opt.background = "dark"
+vim.g.edge_style = 'aura'
+vim.g.my_colorscheme = "edge"
 vim.cmd("colorscheme " .. vim.g.my_colorscheme)
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.opt.hlsearch = false
 
 --- remove highlighted text when enter is pressed
 vim.keymap.set({"n", "v"}, "<CR>", "<cmd>nohlsearch<CR><ESC>", { silent = true})
@@ -69,6 +72,7 @@ vim.keymap.set("n", "<leader>nf", "<cmd>NERDTreeFind<CR>", { silent = true})
 vim.keymap.set("n", "<leader><leader>", "<cmd>buffer #<CR>", { silent = true})
 vim.keymap.set("n", "<leader>s", "<cmd>lua require('telescope.builtin').find_files({default_text=vim.fn.expand('<cword>')})<cr>", { silent = true })
 vim.keymap.set("n", "<leader>t", "<cmd>bo 10split term://$SHELL<cr>A", { silent = true })
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
 require("plugins.cmp")
 require("plugins.lsp")

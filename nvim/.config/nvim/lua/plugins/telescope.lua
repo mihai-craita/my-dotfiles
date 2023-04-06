@@ -2,7 +2,7 @@
 pcall(require('telescope').load_extension, 'fzf')
 require('telescope').setup{
     defaults = {
-        layout_strategy = "vertical",
+        layout_strategy = "horizontal",
         wrap_results = true,
     }
 }

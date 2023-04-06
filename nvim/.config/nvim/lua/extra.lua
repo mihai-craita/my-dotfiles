@@ -36,7 +36,6 @@ vim.opt.termguicolors = true
 vim.opt.shortmess:append("c")
 
 -- [[ Basic Keymaps ]]
--- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ','

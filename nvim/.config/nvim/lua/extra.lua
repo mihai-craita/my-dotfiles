@@ -29,6 +29,8 @@ vim.opt.incsearch = true
 vim.opt.cursorline = true
 vim.opt.scrolloff = 12
 
+vim.opt.belloff = all
+
 -- use true colors palette on 24 bits (16 million colors)
 vim.opt.termguicolors = true
 

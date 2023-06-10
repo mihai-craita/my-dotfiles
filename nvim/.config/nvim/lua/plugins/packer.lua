@@ -8,25 +8,12 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 
 require('packer').startup(function(use)
-    -- My plugins here
-    -- use 'foo1/bar1.nvim'
-    -- use 'foo2/bar2.nvim'
     -- make sure to add this line to let packer manage itself
     use 'wbthomason/packer.nvim'
 
     use { 'scrooloose/nerdtree', cmd = { 'NERDTree', 'NERDTreeFind', 'NERDTreeFocus', 'NERDTreeToggle' } }
     use 'tpope/vim-commentary'
     use 'tpope/vim-fugitive'
-
-    -- use { -- Autocompletion
-    --   requires = { 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-cmdline', 'saadparwaiz1/cmp_luasnip' },
-    -- }
-    -- neovim completion library for lua language nvim library
-    use { 'ii14/emmylua-nvim', ft = { 'lua' }, after = 'nvim-cmp' }
-
-    -- snippets sources
-    use 'rafamadriz/friendly-snippets'
-    use 'honza/vim-snippets'
 
     use {
         'VonHeikemen/lsp-zero.nvim',
@@ -48,6 +35,9 @@ require('packer').startup(function(use)
             {'hrsh7th/nvim-cmp'},     -- Required
             {'hrsh7th/cmp-nvim-lsp'}, -- Required
             {'L3MON4D3/LuaSnip'},     -- Required
+
+            {'rafamadriz/friendly-snippets'}, -- snipets source
+            {'ii14/emmylua-nvim', ft = { 'lua' }} -- neovim completion library for lua language nvim library
         }
     }
 

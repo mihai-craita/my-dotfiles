@@ -17,7 +17,7 @@ require('packer').startup(function(use)
 
     use {
         'VonHeikemen/lsp-zero.nvim',
-        branch = 'v2.x',
+        branch = 'v4.x',
         requires = {
             -- LSP Support
             {'neovim/nvim-lspconfig'},             -- Required
@@ -32,8 +32,8 @@ require('packer').startup(function(use)
             {'jose-elias-alvarez/null-ls.nvim'},   -- Optional
 
             -- Autocompletion
-            {'hrsh7th/nvim-cmp'},     -- Required
             {'hrsh7th/cmp-nvim-lsp'}, -- Required
+            {'hrsh7th/nvim-cmp'},     -- Required
             {'L3MON4D3/LuaSnip'},     -- Required
 
             {'rafamadriz/friendly-snippets'}, -- snipets source
@@ -65,6 +65,9 @@ require('packer').startup(function(use)
     use 'nvim-treesitter/nvim-treesitter-context'
 
     use 'nvim-lualine/lualine.nvim' -- Fancier statusline
+
+    -- Adds git releated signs to the gutter, as well as utilities for managing changes
+    use 'lewis6991/gitsigns.nvim'
 
     -- colors packs, find more on http://vimcolors.com/
     use 'sainnhe/gruvbox-material'

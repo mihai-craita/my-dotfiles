@@ -1,12 +1,4 @@
 -- install packer from github if is not found on the system
-local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-local is_bootstrap = false
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    is_bootstrap = true
-    vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
-    vim.cmd [[packadd packer.nvim]]
-end
-
 require('packer').startup(function(use)
     -- make sure to add this line to let packer manage itself
     use 'wbthomason/packer.nvim'
@@ -38,6 +30,33 @@ require('packer').startup(function(use)
 
             {'rafamadriz/friendly-snippets'}, -- snipets source
             {'ii14/emmylua-nvim', ft = { 'lua' }} -- neovim completion library for lua language nvim library
+        }
+    }
+
+    use {
+        'yetone/avante.nvim',
+        cmd = 'Avante',
+        -- after = 'VimEnter', 
+        -- run = 'make',
+        config = function()
+            require('avante').setup({
+                -- add any opts here
+            })
+        end,
+        requires = {
+            'nvim-tree/nvim-web-devicons', -- or 'echasnovski/mini.icons'
+            'stevearc/dressing.nvim',
+            'nvim-lua/plenary.nvim',
+            'MunifTanjim/nui.nvim',
+            {
+                'MeanderingProgrammer/render-markdown.nvim',
+                config = function()
+                    require('render-markdown').setup({
+                        file_types = { "markdown", "Avante" },
+                    })
+                end,
+                ft = { "markdown", "Avante" },
+            },
         }
     }
 
@@ -88,16 +107,3 @@ require('packer').startup(function(use)
         require('packer').sync()
     end
 end)
-
--- When we are bootstrapping a configuration, it doesn't
--- make sense to execute the rest of the init.lua.
---
--- You'll need to restart nvim, and then it will work.
-if is_bootstrap then
-    print '=================================='
-    print '    Plugins are being installed'
-    print '    Wait until Packer completes,'
-    print '       then restart nvim'
-    print '=================================='
-    return
-end

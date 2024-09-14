@@ -8,7 +8,6 @@
 # These are bash-specific configurations
 #
 #
-echo "Sourcing .bashrc"
 
 # Aliases {{
 alias ll='ls -alF'
@@ -45,3 +44,36 @@ shopt -s checkwinsize  # Check window size after each command and update LINES a
 #
 # }}
 
+# Bash completion setup {{
+setup_bash_completion() {
+    local completion_paths=(
+        "/opt/homebrew/etc/profile.d/bash_completion.sh"  # macOS (Homebrew)
+        "/usr/local/etc/profile.d/bash_completion.sh"     # macOS (Homebrew Intel)
+        "/etc/bash_completion"                            # Linux (Ubuntu, Debian)
+        "/usr/share/bash-completion/bash_completion"      # Linux (CentOS, Fedora)
+    )
+
+    for path in "${completion_paths[@]}"; do
+        if [[ -r "$path" ]]; then
+            . "$path"
+            # echo "Bash completion loaded from $path"
+            return 0
+        fi
+    done
+
+    echo "Warning: bash-completion not found. You may want to install it."
+    return 1
+}
+
+setup_bash_completion
+
+# Optional: Check if bash-completion is working
+if ! type _completion_loader &>/dev/null; then
+    if type complete &>/dev/null && complete -p | grep -q "_completion_loader"; then
+        echo "Bash-completion is working, but _completion_loader is not directly accessible."
+    else
+        echo "Note: Advanced bash-completion features might not be available."
+        echo "Basic completion should still work."
+    fi
+fi
+# }}

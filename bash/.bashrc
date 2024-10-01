@@ -8,6 +8,7 @@
 # These are bash-specific configurations
 #
 #
+bind "set enable-bracketed-paste on"
 
 # Aliases {{
 alias ll='ls -alF'
@@ -40,7 +41,7 @@ shopt -s checkwinsize  # Check window size after each command and update LINES a
     }
 
 ### \t is time \! is history number \w is the directory path
-    PS1='\n'"$MAIN_COLOR"'\t'"$RESET_COLOR $SECONDARY_COLOR"'[\!]'"$RESET_COLOR $TERTIARY_COLOR"'\w'"$RESET_COLOR"'$(parse_git_branch)\n'"$PROMPT_COLOR"'$ '"$RESET_COLOR"
+    PS1='\n\['"$MAIN_COLOR"'\]\t\['"$RESET_COLOR"'\] \['"$SECONDARY_COLOR"'\][\!]\['"$RESET_COLOR"'\] \['"$TERTIARY_COLOR"'\]\w\['"$RESET_COLOR"'\]$(parse_git_branch)\n\['"$PROMPT_COLOR"'\]\$\['"$RESET_COLOR"'\] '
 #
 # }}
 

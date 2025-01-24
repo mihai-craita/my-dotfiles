@@ -26,22 +26,33 @@ shopt -s checkwinsize  # Check window size after each command and update LINES a
 
 # Prompt setup {{
 #
-### color variables - theme
+    ### color variables - theme
     MAIN_COLOR=$(tput setaf 4)  # Blue
     SECONDARY_COLOR=$(tput setaf 2)  # Green
     TERTIARY_COLOR=$(tput setaf 3)  # Yellow
+    GIT_BRANCH_COLOR=$(tput setaf 5)  # Magenta
     PROMPT_COLOR=$(tput setaf 6)  # Cyan
     RESET_COLOR=$(tput sgr0)
 
     parse_git_branch() {
         branch=$(git branch --show-current 2>/dev/null)
         if [ -n "$branch" ]; then
-            echo " ($branch)"
+            echo " on "$GIT_BRANCH_COLOR" $branch"$RESET_COLOR
         fi
     }
 
-### \t is time \! is history number \w is the directory path
-    PS1='\n\['"$MAIN_COLOR"'\]\t\['"$RESET_COLOR"'\] \['"$SECONDARY_COLOR"'\][\!]\['"$RESET_COLOR"'\] \['"$TERTIARY_COLOR"'\]\w\['"$RESET_COLOR"'\]$(parse_git_branch)\n\['"$PROMPT_COLOR"'\]\$\['"$RESET_COLOR"'\] '
+    is_remote() {
+        if [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ]; then
+            host=$(hostname)
+            echo "🚀 $host"  # Remote machine indicator
+        else
+            echo "🏠"  # Local machine indicator
+        fi
+    }
+    REMOTE_INDICATOR=$(is_remote)
+
+    ### \h is hostname \t is time \! is history number \w is the directory path
+    PS1='\n$REMOTE_INDICATOR \['"$MAIN_COLOR"'\]\t\['"$RESET_COLOR"'\] \['"$SECONDARY_COLOR"'\][\!]\['"$RESET_COLOR"'\] \['"$TERTIARY_COLOR"'\]\w\['"$RESET_COLOR"'\]$(parse_git_branch)\n\['"$PROMPT_COLOR"'\]❯\['"$RESET_COLOR"'\] '
 #
 # }}
 

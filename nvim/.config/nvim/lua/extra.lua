@@ -99,7 +99,6 @@ require("config.cmp")
 require("config.lsp")
 require("config.luasnip")
 require("config.telescope")
-require("config.treesitter")
 require("config.lualine")
 require("config.startify")
 

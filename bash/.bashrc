@@ -60,7 +60,9 @@ shopt -s checkwinsize  # Check window size after each command and update LINES a
 setup_bash_completion() {
 
     # completion for make command
-    complete -W "$(make -qp | awk -F':' '/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$)/ {split($1,A,/ /);print A[1]}' | sort -u)" make
+    if [[ -f Makefile ]] || [[ -f makefile ]] || [[ -f GNUmakefile ]]; then
+        complete -W "$(make -qp | awk -F':' '/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$)/ {split($1,A,/ /);print A[1]}' | sort -u)" make
+    fi
 
     local completion_paths=(
         "/opt/homebrew/etc/profile.d/bash_completion.sh"  # macOS (Homebrew)
@@ -93,3 +95,4 @@ if ! type _completion_loader &>/dev/null; then
     fi
 fi
 # }}
+export PATH="$HOME/.local/bin:$PATH"

@@ -11,17 +11,42 @@
 bind "set enable-bracketed-paste on"
 
 # Aliases {{
+# Directory navigation
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias ..='cd ..'
+
+# Git shortcuts
 alias gs='git status'
+
+# Editor
 alias e='nvim' # quick access to editor
+
+# Color grep
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Utility aliases
+alias df='df -h'
+alias du='du -h'
+
+# Safety aliases
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
 # }}
 
 # Bash options {{
 shopt -s histappend  # Append to history file instead of overwriting
 shopt -s checkwinsize  # Check window size after each command and update LINES and COLUMNS if necessary
+# }}
+
+# History settings {{
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+export HISTCONTROL=ignoreboth:erasedups
 # }}
 
 # Prompt setup {{
@@ -67,8 +92,8 @@ setup_bash_completion() {
     local completion_paths=(
         "/opt/homebrew/etc/profile.d/bash_completion.sh"  # macOS (Homebrew)
         "/usr/local/etc/profile.d/bash_completion.sh"     # macOS (Homebrew Intel)
+        "/usr/share/bash-completion/bash_completion"      # Linux (CentOS, Fedora, RHEL)
         "/etc/bash_completion"                            # Linux (Ubuntu, Debian)
-        "/usr/share/bash-completion/bash_completion"      # Linux (CentOS, Fedora)
     )
 
     for path in "${completion_paths[@]}"; do
@@ -95,4 +120,3 @@ if ! type _completion_loader &>/dev/null; then
     fi
 fi
 # }}
-export PATH="$HOME/.local/bin:$PATH"

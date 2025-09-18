@@ -4,6 +4,29 @@
 #
 # Environment variables {{
 export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# OS-specific paths
+case "$(uname -s)" in
+    Darwin*)
+        # macOS paths
+        if [ -d "$HOME/nvim-macos/bin" ]; then
+            export PATH="$HOME/nvim-macos/bin:$PATH"
+        elif [ -d "/usr/local/bin" ]; then
+            export PATH="/usr/local/bin:$PATH"
+        fi
+        ;;
+    Linux*)
+        # Linux paths
+        if [ -d "$HOME/nvim-linux64/bin" ]; then
+            export PATH="$HOME/nvim-linux64/bin:$PATH"
+        fi
+        if [ -d "/usr/local/go/bin" ]; then
+            export PATH="$PATH:/usr/local/go/bin"
+        fi
+        ;;
+esac
+
 export EDITOR="nvim"
 # }}
 

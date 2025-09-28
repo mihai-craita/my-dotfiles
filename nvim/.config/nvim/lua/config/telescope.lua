@@ -22,27 +22,37 @@ vim.keymap.set("n", "<leader>T", "<cmd>lua require('telescope.builtin').tags()<C
 vim.keymap.set("n", "<leader>b", "<cmd>Telescope buffers<CR>")
 vim.keymap.set("n", "<leader>r", "<cmd>Telescope live_grep<CR>")
 
---- leaader G similar with git grep
+--- leader G for git grep with live updates (case insensitive)
 vim.keymap.set("n", "<leader>G", function()
   require('telescope.builtin').live_grep({
-    theme = "ivy",
-    glob_pattern = {
-      "!**/.git/*",
-      "!**/node_modules/*",
-      "!**/vendor/*",
-      "!**/storage/*",  -- Exclude Laravel storage directory
-      "!**/cache/*",   -- Exclude cache directories
-      "!**/build/*",   -- Exclude build directories
+    prompt_title = "Git Grep (case insensitive)",
+    vimgrep_arguments = {
+      "git",
+      "grep",
+      "--line-number",
+      "--column",
+      "--color=never",
+      "-H",
+      "-i",
+      "-E"
     },
-    file_ignore_patterns = {
-      "^.git/",
-      "^node_modules/",
-      "^vendor/",
-      "^storage/",
-      "^cache/",
-      "^build/",
+    cwd = vim.fn.getcwd(),
+  })
+end)
+
+--- leader Gcs for case sensitive git grep
+vim.keymap.set("n", "<leader>Gcs", function()
+  require('telescope.builtin').live_grep({
+    prompt_title = "Git Grep (case sensitive)",
+    vimgrep_arguments = {
+      "git",
+      "grep",
+      "--line-number",
+      "--column",
+      "--color=never",
+      "-H",
+      "-E"
     },
-    additional_args = { "--hidden", "--glob", "!**/.git/*", "--ignore-case" },
-    search_dirs = { "app/", "src/" }, -- Optional: Limit search to specific directories
+    cwd = vim.fn.getcwd(),
   })
 end)

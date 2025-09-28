@@ -83,6 +83,10 @@ export HISTCONTROL=ignoreboth:erasedups
 
 # Bash completion setup {{
 setup_bash_completion() {
+    # Skip if bash completion is already loaded
+    if [[ -n "${BASH_COMPLETION_VERSINFO:-}" ]]; then
+        return 0
+    fi
 
     # completion for make command
     if [[ -f Makefile ]] || [[ -f makefile ]] || [[ -f GNUmakefile ]]; then
@@ -90,8 +94,8 @@ setup_bash_completion() {
     fi
 
     local completion_paths=(
-        "/opt/homebrew/etc/profile.d/bash_completion.sh"  # macOS (Homebrew)
         "/usr/local/etc/profile.d/bash_completion.sh"     # macOS (Homebrew Intel)
+        "/opt/homebrew/etc/profile.d/bash_completion.sh"  # macOS (Homebrew)
         "/usr/share/bash-completion/bash_completion"      # Linux (CentOS, Fedora, RHEL)
         "/etc/bash_completion"                            # Linux (Ubuntu, Debian)
     )
@@ -99,7 +103,6 @@ setup_bash_completion() {
     for path in "${completion_paths[@]}"; do
         if [[ -r "$path" ]]; then
             . "$path"
-            # echo "Bash completion loaded from $path"
             return 0
         fi
     done
@@ -110,13 +113,9 @@ setup_bash_completion() {
 
 setup_bash_completion
 
-# Optional: Check if bash-completion is working
-if ! type _completion_loader &>/dev/null; then
-    if type complete &>/dev/null && complete -p | grep -q "_completion_loader"; then
-        echo "Bash-completion is working, but _completion_loader is not directly accessible."
-    else
-        echo "Note: Advanced bash-completion features might not be available."
-        echo "Basic completion should still work."
-    fi
+# Check if bash-completion loaded successfully (only show once)
+if [[ -n "${BASH_COMPLETION_VERSINFO:-}" && -z "${BASH_COMPLETION_ANNOUNCED:-}" ]]; then
+    echo "Bash completion v${BASH_COMPLETION_VERSINFO[0]}.${BASH_COMPLETION_VERSINFO[1]} loaded successfully"
+    export BASH_COMPLETION_ANNOUNCED=1
 fi
 # }}

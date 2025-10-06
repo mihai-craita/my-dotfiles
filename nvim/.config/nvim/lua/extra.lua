@@ -95,6 +95,20 @@ vim.keymap.set("n", "<leader>s", "<cmd>lua require('telescope.builtin').find_fil
 vim.keymap.set("n", "<leader>t", "<cmd>bo 10split term://$SHELL<cr>A", { silent = true })
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
+vim.api.nvim_create_user_command('CopyPath', function()
+  local path = vim.fn.expand('%')
+  vim.fn.setreg('*', path)
+  vim.notify('Copied: ' .. path, vim.log.levels.INFO)
+end, {})
+
+vim.api.nvim_create_user_command('CopyLine', function()
+  local path = vim.fn.expand('%')
+  local line = vim.fn.line('.')
+  local path_with_line = path .. ':' .. line
+  vim.fn.setreg('*', path_with_line)
+  vim.notify('Copied: ' .. path_with_line, vim.log.levels.INFO)
+end, {})
+
 require("config.cmp")
 require("config.lsp")
 require("config.luasnip")

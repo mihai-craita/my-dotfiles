@@ -10,6 +10,10 @@
 #
 bind "set enable-bracketed-paste on"
 
+# History search with arrow keys
+bind '"\e[A": history-search-backward'  # Up arrow
+bind '"\e[B": history-search-forward'   # Down arrow
+
 # Aliases {{
 # Directory navigation
 alias ll='ls -alF'
@@ -117,5 +121,18 @@ setup_bash_completion
 if [[ -n "${BASH_COMPLETION_VERSINFO:-}" && -z "${BASH_COMPLETION_ANNOUNCED:-}" ]]; then
     echo "Bash completion v${BASH_COMPLETION_VERSINFO[0]}.${BASH_COMPLETION_VERSINFO[1]} loaded successfully"
     export BASH_COMPLETION_ANNOUNCED=1
+fi
+# }}
+
+# FZF history search {{
+if command -v fzf &> /dev/null; then
+    # Ctrl+R for fuzzy history search
+    __fzf_history() {
+        local selected
+        selected=$(HISTTIMEFORMAT= history | fzf --tac --tiebreak=index --no-sort | sed 's/^[[:space:]]*[0-9]*[[:space:]]*//')
+        READLINE_LINE="$selected"
+        READLINE_POINT=${#READLINE_LINE}
+    }
+    bind -x '"\C-r": __fzf_history'
 fi
 # }}

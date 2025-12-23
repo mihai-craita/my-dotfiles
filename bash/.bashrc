@@ -136,3 +136,5 @@ if command -v fzf &> /dev/null; then
     bind -x '"\C-r": __fzf_history'
 fi
 # }}
+
+alias claude="/Users/mihai/.claude/local/claude"

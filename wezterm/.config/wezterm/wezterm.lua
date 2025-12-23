@@ -54,7 +54,7 @@ config.colors = {
 -- Window appearance
 config.window_background_opacity = 0.95
 config.text_background_opacity = 1.0
-config.window_decorations = "RESIZE"
+config.window_decorations = "TITLE | RESIZE"
 config.window_padding = {
   left = 8,
   right = 8,

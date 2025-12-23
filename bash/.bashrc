@@ -137,4 +137,7 @@ if command -v fzf &> /dev/null; then
 fi
 # }}
 
-alias claude="/Users/mihai/.claude/local/claude"
+# Claude Code alias (only if installed locally)
+if [[ -x "$HOME/.claude/local/claude" ]]; then
+    alias claude="$HOME/.claude/local/claude"
+fi

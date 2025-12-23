@@ -93,4 +93,17 @@ Language servers must be installed separately (e.g., `npm i -g intelephense` for
 
 ## Cross-Platform Support
 
-The `.profile` file includes OS detection for macOS and Linux with platform-specific PATH configurations for nvim and Go installations.
+**Platform Compatibility:** These dotfiles are designed to work across macOS, Linux, and Windows (via WSL, Git Bash, or Cygwin).
+
+**OS Detection:** The `.profile` file includes OS detection logic for macOS and Linux with platform-specific PATH configurations for tools like nvim and Go installations.
+
+**Cross-Platform Design Principles:**
+- Configuration files use portable paths and tools where possible
+- Shell configs (bash/.profile, bash/.bashrc) use OS detection for platform-specific customizations
+- Neovim, tmux, and terminal emulator configs are platform-agnostic
+- GNU Stow works identically on macOS (via Homebrew), Linux (via package managers), and Windows (via WSL/package managers)
+
+**Windows Considerations:**
+- WSL recommended for full compatibility
+- Git Bash and Cygwin can work but may need adjustments for some features
+- Windows paths may need translation for some tools

@@ -137,6 +137,36 @@ if command -v fzf &> /dev/null; then
 fi
 # }}
 
+# SSH Agent setup {{
+# Ensure SSH agent is available for all terminal sessions
+# This handles both local sessions and agent forwarding scenarios
+setup_ssh_agent() {
+    # If SSH_AUTH_SOCK is already set and valid, we're done
+    # (covers agent forwarding and already-running agents)
+    if [ -n "$SSH_AUTH_SOCK" ] && [ -e "$SSH_AUTH_SOCK" ]; then
+        return 0
+    fi
+
+    # Start a new agent
+    eval $(ssh-agent -s) > /dev/null
+
+    # Auto-add available private keys
+    local key_files=(
+        "$HOME/.ssh/id_ed25519"
+        "$HOME/.ssh/id_rsa"
+        "$HOME/.ssh/id_ecdsa"
+    )
+
+    for key in "${key_files[@]}"; do
+        if [ -f "$key" ]; then
+            ssh-add "$key" 2>/dev/null
+        fi
+    done
+}
+
+setup_ssh_agent
+# }}
+
 # Claude Code alias (only if installed locally)
 if [[ -x "$HOME/.claude/local/claude" ]]; then
     alias claude="$HOME/.claude/local/claude"
